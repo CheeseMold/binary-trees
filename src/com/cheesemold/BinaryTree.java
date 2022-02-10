@@ -62,27 +62,46 @@ public class BinaryTree {
     }
 
     public void removeNode(Node removeNode) {
+        removeNode(removeNode.key);
+    }
+
+    public void removeNode(int removeValue) {
         Node focusNode = root;
         Node parent;
-        if (removeNode.key == focusNode.key) {
+        if (removeValue == focusNode.key) {
             root = null;
         } else {
             while (focusNode != null) {
                 parent = focusNode;
-                if (removeNode.key < focusNode.key) {
+                if (removeValue < focusNode.key) {
                     focusNode = focusNode.leftChild;
-                    if (focusNode != null && focusNode.key == removeNode.key) {
+                    if (focusNode != null && focusNode.key == removeValue) {
                         parent.leftChild = null;
                         return;
                     }
                 } else {
                     focusNode = focusNode.rightChild;
-                    if (focusNode != null && focusNode.key == removeNode.key) {
+                    if (focusNode != null && focusNode.key == removeValue) {
                         parent.rightChild = null;
                         return;
                     }
                 }    
             }
         }
+    }
+
+    public Node findNode(Node searchNode) {
+        Node focusNode = root;
+
+        while (focusNode != null) {
+            if (searchNode.key == focusNode.key) {
+                return focusNode;
+            }
+            if (searchNode.key < focusNode.key) {
+                focusNode = focusNode.leftChild;
+            } else {
+                focusNode = focusNode.rightChild;
+            }
+        } return null;
     }
 }

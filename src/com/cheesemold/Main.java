@@ -22,6 +22,8 @@ public class Main {
         myBinaryTree.removeNode(new Node(110, "343"));
         System.out.println("\n");
         myBinaryTree.traverseTreePreOrder(myBinaryTree.getRoot());
-    }
 
+        System.out.println("\n");
+        System.out.println(myBinaryTree.findNode(new Node(30, "n7")));
+    }
 }
