@@ -90,14 +90,20 @@ public class BinaryTree {
         }
     }
 
+
+
     public Node findNode(Node searchNode) {
+        return findNode(searchNode.key);
+    }
+
+    public Node findNode(int nodeValue) {
         Node focusNode = root;
 
         while (focusNode != null) {
-            if (searchNode.key == focusNode.key) {
+            if (nodeValue == focusNode.key) {
                 return focusNode;
             }
-            if (searchNode.key < focusNode.key) {
+            if (nodeValue < focusNode.key) {
                 focusNode = focusNode.leftChild;
             } else {
                 focusNode = focusNode.rightChild;
