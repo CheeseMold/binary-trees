@@ -65,32 +65,82 @@ public class BinaryTree {
         removeNode(removeNode.key);
     }
 
-    public void removeNode(int removeValue) {
+    public boolean removeNode(int removeValue) {
         Node focusNode = root;
-        Node parent;
-        if (removeValue == focusNode.key) {
-            root = null;
-        } else {
-            while (focusNode != null) {
-                parent = focusNode;
-                if (removeValue < focusNode.key) {
-                    focusNode = focusNode.leftChild;
-                    if (focusNode != null && focusNode.key == removeValue) {
-                        parent.leftChild = null;
-                        return;
-                    }
-                } else {
-                    focusNode = focusNode.rightChild;
-                    if (focusNode != null && focusNode.key == removeValue) {
-                        parent.rightChild = null;
-                        return;
-                    }
-                }    
+        Node parent = root;
+
+        boolean isItALeftChild = true;
+
+        while (focusNode.key != removeValue) {
+            parent = focusNode;
+
+            if (removeValue < focusNode.key) {
+                focusNode = focusNode.leftChild;
+                isItALeftChild = true;
+            } else {
+                focusNode = focusNode.rightChild;
+                isItALeftChild = false;
+            }
+            if (focusNode == null) {
+                return false;
             }
         }
+
+        if (focusNode.rightChild == null && focusNode.leftChild == null) {
+            if (focusNode == root)
+                root = null;
+            else if (isItALeftChild)
+                parent.leftChild = null;
+            else
+                parent.rightChild = null;
+
+        } else if (focusNode.rightChild == null){
+            if (focusNode == root)
+                root = root.leftChild;
+            else if (isItALeftChild)
+                parent.leftChild = focusNode.leftChild;
+            else
+                parent.rightChild = focusNode.leftChild;
+
+        } else if (focusNode.leftChild == null) {
+            if (focusNode == root)
+                root = root.rightChild;
+            else if (isItALeftChild)
+                parent.leftChild = focusNode.rightChild;
+            else
+                parent.rightChild = focusNode.rightChild;
+
+        } else {
+            Node replacement = getReplacementNode(focusNode);
+            if (focusNode == root)
+                root = replacement;
+            else if (isItALeftChild)
+                parent.leftChild = replacement;
+            else
+                parent.rightChild = replacement;
+
+            replacement.leftChild = focusNode.leftChild;
+        } return true;
     }
 
+    private Node getReplacementNode(Node replaceNode) {
+        Node replacementParent = replaceNode;
+        Node replacement = replaceNode;
 
+        Node focusNode = replaceNode.rightChild;
+
+        while (focusNode != null) {
+            replacementParent = replacement;
+            replacement = focusNode;
+            focusNode = focusNode.leftChild;
+        }
+
+        if (replacement != replaceNode.rightChild) {
+            replacementParent.leftChild = replacement.rightChild;
+            replacement.rightChild = replaceNode.rightChild;
+        }
+        return replacement;
+    }
 
     public Node findNode(Node searchNode) {
         return findNode(searchNode.key);

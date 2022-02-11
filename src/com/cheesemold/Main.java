@@ -18,8 +18,9 @@ public class Main {
         //myBinaryTree.traverseTreeInOrder(myBinaryTree.getRoot());
 
         myBinaryTree.traverseTreePreOrder(myBinaryTree.getRoot());
+        System.out.println("\n");
 
-        myBinaryTree.removeNode(new Node(110, "343"));
+        myBinaryTree.removeNode(new Node(50, "343"));
         System.out.println("\n");
         myBinaryTree.traverseTreePreOrder(myBinaryTree.getRoot());
 
